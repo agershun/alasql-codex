@@ -20,37 +20,27 @@
     <script src="lib/alasql/alasql.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/codex.css">
 
+    <script src="js/options.js"></script>
+
     </head>
     <body>
         <script type="text/javascript" charset="utf-8">
 
 
   webix.ready(function(){
-webix.ui({
-  view:"popup",
-  id:"my_pop",
-    head:"Submenu",
-  width:300,
-  body:{
-    view:"list", 
-    data:[ {id:"1", name:"Zoo", location: "New York"},
-        {id:"2", name:"Coffeebar", location:"Salt Lake City"},
-        {id:"3", name:"Teeparty", location:"Alabama"}
-    ],
-    datatype:"json",
 
-    template:"#name# - #location#",
-    autoheight:true,
-    select:true
-  }
-});
+    // Define about popup
+    webix.ui({view:"popup",id:"about_pop",
+      width:300,height:150,
+      body:{template:'AlaSQL Code Examples<br>(c) 2015 Andrey Gershun'}
+    });
 
-
+    // Define main window
     webix.ui({rows:[
         {view:"toolbar", paddingY:2,
             elements:[
               { view:'label',template: "<span class='main_title'> <a href='http://alasql.org' style='color:white;font-weight:bold;text-decoration:none'>AlaSQL</a> Code Examples v0.1.9</span>" },
-              {view:"icon",width: 40, icon:"cog", popup: "my_pop" }
+              {view:"icon",width: 40, icon:"question-circle", popup: "about_pop" }
           ]},
 
       {cols:[
@@ -77,7 +67,6 @@ webix.ui({
               ]}
           ]},
 
-
           { view:"resizer" },
           {rows: [
             {view:"toolbar", paddingY:2,
@@ -96,18 +85,51 @@ webix.ui({
             body: { id:'dbtree',view:"tree", gravity:0.4, select:true },
           },
           { header:"Functions", headerAlt:"Functions", 
-            body:{ id:'fntree',view:"tree", gravity:0.4, select:true },
+            body:{
+             id:'fntable',view:"datatable",header:false,columns:[
+              {id:'fnid',sort:'string'},
+              {id:'value'},
+             ] 
+           },          
           },
           { header:"Variables", headerAlt:"Variables", 
-            body:{ id:'vartree',view:"tree", gravity:0.4, select:true },
+            body:{
+             id:'vartable',view:"datatable",header:false,columns:[
+              {id:'varid',sort:'string'},
+              {id:'value'},
+             ] 
+           },          
+          },
+          { header:"Parameters", headerAlt:"Parameters", 
+            body:{
+             id:'partable',view:"datatable",header:false,columns:[
+              {id:'parid',sort:'string'},
+              {id:'value'},
+             ] 
+           },          
           },
           { header:"Options", headerAlt:"Options",
-            body:{ id:'opttree',view:"tree", gravity:0.4, select:true },          
+            body:{
+             id:'opttable',view:"datatable",header:false,columns:[
+              {id:'optid',sort:'string'},
+              {id:'value'},
+             ] 
+           },          
           },
         ]},
       ]},
     ]});
+
+//    $$('opttable').markSorting("optid", "asc");
+    showOptions();
+    showFunctions();
+    showVariables();
+    showParams();
+
+
   });
+
+
 
 
 
