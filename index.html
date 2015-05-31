@@ -29,6 +29,15 @@
         <script type="text/javascript" charset="utf-8">
 
 
+  var exdata = [
+    {id:0,value:'Welcome to AlaSQL',url:'index.txt'},
+    {id:1,value:'Welcome to AlaSQL',desc:'# Welcome to AlaSQL Code Examples! \n```sql\nSELECT 100\n```\nThis is a text'},
+    {id:2,value:'SELECT',sql:'SELECT 100'},
+    {id:3,value:'SELECT',js:'console.log("Ok!")'}
+  ];
+
+  ;
+
   webix.ready(function(){
 
     // Define about popup
@@ -49,7 +58,7 @@
         {width:250, rows: [
           { type:"header", template:"Examples" },
           { id:'extree',view:"tree", gravity:0.4, select:true,
-            data: [{id:'start',value:'Welcome to AlaSQL',url:'index.txt'}]
+            data: exdata
           },
         ]},
         { view:"resizer" },        
@@ -142,10 +151,10 @@
         loadFile(id,item);
 
         item.src = undefined;
-      }
+      };
 
       if(item.desc) {
-        $$('descView').setHTML(item.desc);
+        $$('descView').setHTML(marked(item.desc));
         $$('editbar').setValue('descView');
       };
       if(item.ddl) {
@@ -157,12 +166,12 @@
         $$('editbar').setValue('sqlView');
       };
       if(item.js) {
-        $$('jsView').setValue(item.sql);
+        $$('jsView').setValue(item.js);
         $$('editbar').setValue('jsView');
       };
     });
 
-    $$('extree').select('start');
+    $$('extree').select(0);
 
 
   });
