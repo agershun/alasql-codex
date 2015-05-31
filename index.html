@@ -25,36 +25,10 @@
 
 
   webix.ready(function(){
-    webix.ui({
-      rows:[
-        { cols:[
-          {rows:[
-            { type:"header", template:"AlaSQL Code Examples" },
-            { id:'tree',view:"tree", gravity:0.4, select:true },
-            { view:"resizer" },
-            { type:"header", template:"Database tables" },
-            { id:'dbtree',view:"tree", gravity:0.4, select:true },
-          ], width:200},
-          { view:"resizer" },
-          { id: 'rw', rows:[
-
-            {
-              container:"areaA",
-              view:"toolbar",
-              cols:[
-                { id:'runquery',view:"button", type:"icon", icon:"flash", label:"Run query" },
-              ]
-            }, 
-            { id:'editor', view:"codemirror-editor", mode:'text/x-sql'}, 
-            { view:"resizer" },
-            { id:'grid', view:"datatable", autoConfig:true}
-
-          ]}
-        ]}
-      ]
-    });
-  }
-};
+    webix.ui(
+            { type:"header", template:"AlaSQL Code Examples" }
+    );
+  });
 
 
 
