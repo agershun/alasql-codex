@@ -20,7 +20,9 @@
     <script src="lib/alasql/alasql.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/codex.css">
 
+    <!-- CODEX FILES -->
     <script src="js/options.js"></script>
+    <script src="js/loadfile.js"></script>
 
     </head>
     <body>
@@ -39,30 +41,32 @@
     webix.ui({rows:[
         {view:"toolbar", paddingY:2,
             elements:[
-              { view:'label',template: "<span class='main_title'> <a href='http://alasql.org' style='color:white;font-weight:bold;text-decoration:none'>AlaSQL</a> Code Examples v0.1.9</span>" },
+              { id:'title', view:'label',template: "" },
               {view:"icon",width: 40, icon:"question-circle", popup: "about_pop" }
           ]},
 
       {cols:[
         {width:250, rows: [
           { type:"header", template:"Examples" },
-          { id:'extree',view:"tree", gravity:0.4, select:true },
+          { id:'extree',view:"tree", gravity:0.4, select:true,
+            data: [{id:'start',value:'Welcome to AlaSQL',url:'index.txt'}]
+          },
         ]},
         { view:"resizer" },        
         {rows: [
           {rows: [
               {
-                  borderless:true, view:"tabbar", id:'tabbar', value: 'listView', multiview:true, options: [
+                  borderless:true, view:"tabbar", id:'editbar', value: 'listView', multiview:true, options: [
                       { value: 'Description', id: 'descView'},
-                      { value: 'SQL Data Model', id: 'dataView'},
-                      { value: 'SQL Query', id: 'queryView'},
+                      { value: 'SQL Data Model', id: 'ddlView'},
+                      { value: 'SQL Query', id: 'sqlView'},
                       { value: 'JavaScript', id: 'jsView'},
                   ]
               },
               { cells:[ 
                   {id:"descView", template:"Description"},
-                  {id:"dataView", view:"codemirror-editor", mode:'text/x-sql'},
-                  {id:"queryView", view:"codemirror-editor", mode:'text/x-sql'},
+                  {id:"ddlView", view:"codemirror-editor", mode:'text/x-sql'},
+                  {id:"sqlView", view:"codemirror-editor", mode:'text/x-sql'},
                   {id:"jsView", view:"codemirror-editor", mode:'text/x-javascript'}
               ]}
           ]},
@@ -119,12 +123,46 @@
         ]},
       ]},
     ]});
+  
+    // Set label AlaSQL version
+    $$('title').setHTML("<span class='main_title'> <a href='http://alasql.org' style='color:white;font-weight:bold;text-decoration:none'>AlaSQL</a> Code Examples v"+alasql.version+"</span>");
 
-//    $$('opttable').markSorting("optid", "asc");
+    showTables();
     showOptions();
     showFunctions();
     showVariables();
     showParams();
+
+    $$('extree').attachEvent("onAfterSelect", function (id) {
+      var item = $$('extree').getSelectedItem();
+
+      if(item.url && !item.desc && !item.ddl && !item.sql && !item.js) {
+        // Load file and tree
+
+        loadFile(id,item);
+
+        item.src = undefined;
+      }
+
+      if(item.desc) {
+        $$('descView').setHTML(item.desc);
+        $$('editbar').setValue('descView');
+      };
+      if(item.ddl) {
+        $$('ddlView').setValue(item.ddl);
+        $$('editbar').setValue('ddlView');
+      };
+      if(item.sql) {
+        $$('sqlView').setValue(item.sql);
+        $$('editbar').setValue('sqlView');
+      };
+      if(item.js) {
+        $$('jsView').setValue(item.sql);
+        $$('editbar').setValue('jsView');
+      };
+    });
+
+    $$('extree').select('start');
 
 
   });
