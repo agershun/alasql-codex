@@ -1,13 +1,10 @@
 
-
   var exdata = [
-    {id:0,value:'Welcome to AlaSQL',url:'index.txt'},
-    {id:1,value:'Welcome to AlaSQL',desc:'# Welcome to AlaSQL Code Examples! \n```sql\nSELECT 100\n```\nThis is a text'},
-    {id:2,value:'SELECT',sql:'SELECT 100'},
-    {id:3,value:'SELECT',js:'console.log("Ok!")'}
+    {id:0,value:'Init',url:'index.txt'},
+//    {id:1,value:'Welcome to AlaSQL',desc:'# Welcome to AlaSQL Code Examples! \n```sql\nSELECT 100\n```\nThis is a text'},
+//    {id:2,value:'SELECT',sql:'SELECT 100'},
+//    {id:3,value:'SELECT',js:'console.log("Ok!")'}
   ];
-
-  ;
 
   webix.ready(function(){
 
@@ -115,7 +112,9 @@
     showParams();
 
     $$('extree').attachEvent("onAfterSelect", function (id) {
-      var item = $$('extree').getSelectedItem();
+      var item = $$('extree').getItem(id);
+
+//      console.log(item);
 
       if(item.url && !item.desc && !item.ddl && !item.sql && !item.js) {
         // Load file and tree
@@ -145,7 +144,7 @@
 
     $$('extree').select($$('extree').getFirstId());
 
-    showResults([[1,2,3]]);
+//    showResults([[1,2,3]]);
 
   });
 
