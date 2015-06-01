@@ -1,3 +1,10 @@
 .error {
 	color:red;
 }
+
+.query_btn .webixtype_base{
+	font-weight: bold;
+/*	color:black !important;
+	background-color: blue !important; 
+*/
+}

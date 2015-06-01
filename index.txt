@@ -1,0 +1,60 @@
+# Welcome to AlaSQL!
+
+Welcome to AlaSQL!
+===
+Please try these tests to see the power of AlaSQL JavaScript SQL database library.
+
+## Data types
+AlaSQL supports many different data types
+
+### JavaScript data types
+
+#### NUMBER
+%sql
+DECLARE @a NUMBER;
+SET @a = 123.45;
+SELECT @a;
+
+#### STRING
+%sql
+DECLARE @a STRING;
+SET @a = "123.45";
+SELECT @a;
+
+#### BOOLEAN
+%sql
+DECLARE @a BOOLEAN;
+SET @a = TRUE;
+SELECT @a;
+
+#### Date
+%sql
+DECLARE @a Date;
+SET @a = "20150602";
+SELECT @a;
+
+### PostgreSQL data types
+
+#### INTEGER
+%sql
+DECLARE @a INT;
+SET @a = 123.45;
+SELECT @a;
+
+#### FLOAT
+%sql
+DECLARE @a FLOAT;
+SET @a = 123.45;
+SELECT @a;
+
+## Create Tables
+
+### CREATE TABLE with columns
+%ddl
+CREATE TABLE Person (
+	Id SERIAL,
+	Name STRING
+);
+INSERT INTO Person(Name) VALUES ("Vyacheslav"), ("Peter"), ("Semen");
+%sql
+SELECT * FROM Person
