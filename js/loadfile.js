@@ -30,7 +30,7 @@ function loadFile(id){
         			item.url = undefined;
                     item.type = 'folder';
                     item.open=true;
-                    item.value = s.substr(3);  // Set name for the item
+                    item.value = s.substr(2);  // Set name for the item
                     $$('extree').updateItem(item.id,item);
         		} else {
         			item = {type:'file',id:url+'.'+i,value:s.substr(sharplevel+1)};  // Set name for the item
@@ -48,7 +48,7 @@ function loadFile(id){
                         $$('extree').add(item,null,id);
                         stack[sp] = item.id;
                     } else {
-                        console.log(sharplevel,sp);
+//                        console.log(sharplevel,sp);
                         sp=sharplevel;
                         stack.length = sp;
                         var id = stack[sp-1];

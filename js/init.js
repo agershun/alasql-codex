@@ -126,20 +126,28 @@
 
       if(item.desc) {
         $$('descView').setHTML(marked(item.desc));
-        $$('editbar').setValue('descView');
       };
       if(item.ddl) {
         $$('ddlView').setValue(item.ddl);
-        $$('editbar').setValue('ddlView');
       };
       if(item.sql) {
         $$('sqlView').setValue(item.sql);
-        $$('editbar').setValue('sqlView');
       };
       if(item.js) {
         $$('jsView').setValue(item.js);
-        $$('editbar').setValue('jsView');
       };
+
+      if(item.js) {
+        $$('editbar').setValue('jsView');
+      } else if(item.sql) {
+        $$('editbar').setValue('sqlView');
+      } else if(item.ddl) {
+        $$('editbar').setValue('ddlView');
+      } else if(item.desc) {
+        $$('editbar').setValue('descView');
+      };
+
+      runQuery(id);
     });
 
     $$('extree').select($$('extree').getFirstId());

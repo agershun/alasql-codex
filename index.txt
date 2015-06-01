@@ -46,3 +46,15 @@ SELECT @a;
 DECLARE @a FLOAT;
 SET @a = 123.45;
 SELECT @a;
+
+## Create Tables
+
+### CREATE TABLE with columns
+%ddl
+CREATE TABLE Person (
+	Id SERIAL,
+	Name STRING
+);
+INSERT INTO Person(Name) VALUES ("Vyacheslav"), ("Peter"), ("Semen");
+%sql
+SELECT * FROM Person

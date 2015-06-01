@@ -1,13 +1,13 @@
 function showTables() {
   var dbtree = [];
   for(var dbid in alasql.databases) {
-    if(dbid != 'dbo' && dbid != 'test') {
+    if(dbid != 'dbo' && dbid != 'alasql') {
       var db = {type:'folder',value:dbid, id:dbid, open:true, data:[]};
       dbtree.push(db);
 
       var dbt = {type:'folder',value:'Tables', id:dbid+'.tables', open:true, data:[]};
-      var dbv = {type:'folder',value:'Views', id:dbid+'.views', open:true, data:[]};
-      var dbc = {type:'folder',value:'Classes', id:dbid+'.classes', open:true, data:[]};
+      var dbv = {type:'folder',value:'Views', id:dbid+'.views', open:false, data:[]};
+      var dbc = {type:'folder',value:'Classes', id:dbid+'.classes', open:false, data:[]};
       var dbo = {type:'file',value:'Objects', id:dbid+'.objects'};
       db.data.push(dbt);
       db.data.push(dbv);
@@ -15,6 +15,7 @@ function showTables() {
       db.data.push(dbo);
 
       for(var tableid in alasql.databases[dbid].tables) {
+//        console.log(tableid);
         if(alasql.databases[dbid].tables.view) {
           dbv.data.push({type:'file',value:tableid, id:dbid+'.'+tableid, databaseid:dbid});
         } else {
