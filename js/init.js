@@ -119,9 +119,9 @@
       if(item.url && !item.desc && !item.ddl && !item.sql && !item.js) {
         // Load file and tree
 
-        loadFile(id,item);
+        loadFile(id);
 
-        item.src = undefined;
+        item.url = undefined;
       };
 
       if(item.desc) {

@@ -16,14 +16,25 @@ function showTables() {
 
       for(var tableid in alasql.databases[dbid].tables) {
         if(alasql.databases[dbid].tables.view) {
-          dbv.data.push({type:'file',value:tableid, id:tableid, databaseid:dbid});
+          dbv.data.push({type:'file',value:tableid, id:dbid+'.'+tableid, databaseid:dbid});
         } else {
-          dbt.data.push({type:'file',value:tableid, id:tableid, databaseid:dbid});
+          dbt.data.push({type:'file',value:tableid, id:dbid+'.'+tableid, databaseid:dbid});
         }
       };
     }
   };
   $$('dbtree').clearAll();
   $$('dbtree').parse(dbtree);
+
+  $$('dbtree').attachEvent("onAfterSelect", function (id) {
+    var item = $$('dbtree').getItem(id);
+    var tb = alasql.databases[item.databaseid].tables[item.value];
+      console.log(tb);
+    if(tb && tb.data) {
+      var res = tb.data;
+      showResults([res]);
+    }
+  });
+
 };
 

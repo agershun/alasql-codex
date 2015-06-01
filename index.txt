@@ -1,36 +1,3 @@
 # Welcome to AlaSQL!
 
 Here you can find many simple examples how AlaSQL works.
-
-## Simple examples
-%src ex/simple.txt
-
-## Complex examples
-%src ex/simple.txt
-
-# Inlime example
-
-## Subexample
-
-### Subsubexample
-%ddl
-
-CREATE TABLE 
-
-### Load data
-This example shows how to create tables with AlaSQL:
-
-%ddl
-
-CREATE TABLE one;
-
-%sql
-
-SELECT * FROM one;
-
-### INTEGER
-%js
-alasql('SELECT * FROM one');
-
-
-

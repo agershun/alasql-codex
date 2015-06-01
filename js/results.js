@@ -10,8 +10,11 @@ function showResults(data,err){
 
     if(typeof res == 'object') {
       if(res instanceof alasql.Recordset) {
-        var columns = res.columns.map(function(columnid){
-          return {id:columnid};
+        var columns = [];
+        res.columns.forEach(function(columnid){
+//          if(columnid != 'id') {
+            columns.push({id:columnid});
+//          }
         });     
         $$('rw').addView({ 
           id:'result', view:"datatable", columns:columns,data:res.data
@@ -33,8 +36,11 @@ function showResults(data,err){
               }
             }
 
-            var columns = Object.keys(allcol).map(function(columnid){
-              return {id:columnid};
+            var columns = [];
+            Object.keys(allcol).forEach(function(columnid){
+              if(columnid != 'id') {
+                columns.push({id:columnid});
+              }
             });     
           }
         } else {
