@@ -1,51 +1,61 @@
 function loadFile(id){
 //	console.log(root);
     var root = $$('extree').getItem(id);
-	var result = webix.ajax().sync().get(root.url);
+    var url = root.url;
+    root.url = undefined;
+	var result = webix.ajax().sync().get(url);
     var text = result.responseText;
     var line = text.split(/(\n\r)|(\n)/);
 
-    var i = 0;
-    var stack = [root];
-    var sp = 0; 
+    var i = 0;              // Counter
+    var stack = [id];     // Stack
+    var sp = 0;             // Stack Pointer
     var firsttime = true;
     var state = 'desc';
-    var item = stack[sp];
-    var url = item.url;
+    var id = stack[sp];
+
     while(i<line.length) {
-        item = stack[sp];
-    	var s = line[i];
+        id = stack[sp];
+        item = $$('extree').getItem(id);   // Current Item
+    	var s = line[i];    // Current Line
         i++;
         if(typeof s != 'undefined') {
-        	var sharp = s.match(/^[#]+\s/);
-        	if(sharp != null && sharp.length > 0) {
-        		if(firsttime && sharp.length == 2) {
+        	var sharp = s.match(/^[#]+\s/);    // If sharp exists in this line
+        	if(sharp != null) {
+                state = 'desc';                
+                var sharplevel = sharp[0].length-2;
+//                console.log('sharplevel',sharplevel);
+        		if(firsttime && sharplevel == 0) {
         			firsttime = false;
         			item.url = undefined;
+                    item.type = 'folder';
+                    item.open=true;
+                    item.value = s.substr(3);  // Set name for the item
                     $$('extree').updateItem(item.id,item);
         		} else {
-        			item = {type:'file',id:url+'.'+i};
-                    if(sharp.length-1 > sp) {
-
-                        if(typeof stack[sp].data == 'undefined') {
-                            stack[sp].type = 'folder';
-                            stack[sp].data = [];
-                        }
-//                        stack[sp].data.push(item);
-                        $$('extree').add(item,null,stack[sp].id);
-
-                        stack.push(item);
+        			item = {type:'file',id:url+'.'+i,value:s.substr(sharplevel+1)};  // Set name for the item
+                    if(sharplevel > sp) {
+                        var id = stack[sp];
+                        // var rit = $$('exdata').getItem(id);
+                        // rit.type = 'folder';
+                        // $$('exdata').updateItem(id,rit);
+                        $$('extree').add(item,null,id);
+                        //if(stack.length>1) stack.length--;
+                        stack.push(item.id);
                         sp++;
-                    } else if(sharp.length-1 == sp) {
-                        stack[sp] = item;
+                    } else if(sharplevel == sp) {
+                        var id = stack[sp-1];
+                        $$('extree').add(item,null,id);
+                        stack[sp] = item.id;
                     } else {
-                        sp=sharp.length-1;
-                        stack.length = sp-1;
-                        stack.push(item);
+                        console.log(sharplevel,sp);
+                        sp=sharplevel;
+                        stack.length = sp;
+                        var id = stack[sp-1];
+                        $$('extree').add(item,null,id);
+                        stack[sp] = item.id;
                     }
         		}
-        		item.value = s.substr(sharp[0].length);  
-                state = 'desc';
             } else if(s == '%ddl') {
                 state = 'ddl';
         	} else if(s == '%sql') {
@@ -57,8 +67,8 @@ function loadFile(id){
             }
         }
     };
-    console.log(item);
-    $$('extree').updateItem(item.id,item);
+//    console.log(63,id);
+//    $$('extree').updateItem(item.id,item);
 
     $$('extree').refresh();
 //    $$('extree').clearAll();

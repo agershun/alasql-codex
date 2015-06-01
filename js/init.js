@@ -121,7 +121,7 @@
 
         loadFile(id);
 
-        item.url = undefined;
+//        item.url = undefined;
       };
 
       if(item.desc) {
