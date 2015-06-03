@@ -8,3 +8,7 @@
 	background-color: blue !important; 
 */
 }
+
+.borderless > .webix_el_box > button {
+	border: none;
+}
