@@ -32,6 +32,37 @@ function runQuery(id) {
 
 };
 
+
+function runQuery2() {
+  clearDatabases();
+  alasql('DROP DATABASE IF EXISTS test;CREATE DATABASE test;USE test');
+  alasql.options.errorlog = true;
+  delete alasql.options.modifier;
+  
+  var code = $$('editor').getValue();
+  if(code.indexOf('alasql')==-1) {
+    var sql = 'SELECT 1;'+code;
+//    console.log(sql);
+    alasql(sql,{},function(data,err){
+          showResults(data,err);
+    });
+  } else {
+    var s = code;
+    if(s.indexOf('done') > -1) {
+      var fn = new Function('alasql,done',s);
+      fn(alasql,function(data,err){
+        showResults([data],alasql.error);
+      });
+    } else {
+      s = 'var res;'+s+';return [res];';
+      var fn = new Function('alasql',s);
+      showResults(fn(alasql),alasql.error);
+    }
+  };
+};
+
+
+
 // Clear active databases
 function clearDatabases() {
   for(var dbid in alasql.databases) {

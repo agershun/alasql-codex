@@ -5,6 +5,10 @@ function showResults(data,err){
     $$('rw').addView({ 
       id:'result', template:err, css:'error'
     });
+  } else if(data.length == 1) {
+    $$('rw').addView({ 
+      id:'result', template:''
+    });
   } else {
     var res = data[data.length-1];
 
@@ -38,9 +42,9 @@ function showResults(data,err){
 
             var columns = [];
             Object.keys(allcol).forEach(function(columnid){
-              if(columnid != 'id') {
+//              if(columnid != 'id') {
                 columns.push({id:columnid});
-              }
+//              }
             });     
           }
         } else {

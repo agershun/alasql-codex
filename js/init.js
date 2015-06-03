@@ -25,7 +25,7 @@
       {cols:[
         {width:250, rows: [
           { type:"header", template:"Examples" },
-          {view:"search", align:"center", placeholder:"Search..", id:"search"}, 
+          {view:"search", align:"center", placeholder:"Search...", id:"search"}, 
           { id:'extree',view:"tree", gravity:0.4, select:true,
             data: exdata
           },
